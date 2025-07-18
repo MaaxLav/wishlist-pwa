@@ -8,6 +8,8 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      injectRegister: "script",
+      registerType: "prompt",
       devOptions: {
         enabled: true,
         type: "module",
@@ -29,8 +31,6 @@ export default defineConfig({
           },
         ],
       },
-      injectRegister: "script",
-      registerType: "autoUpdate",
       includeAssets: [
         "favicon.ico",
         "favicon.svg",
@@ -44,10 +44,10 @@ export default defineConfig({
         name: "Your Wishes",
         short_name: "Wishes",
         description: "A simple Wishlist PWA application",
-        theme_color: "#d5d991",
-        background_color: "#d5d991",
+        theme_color: "#e0dac0",
+        background_color: "#ffffff",
         display: "standalone",
-        start_url: "/index.html",
+        start_url: ".",
         orientation: "portrait-primary",
         icons: [
           {

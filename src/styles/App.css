@@ -8,6 +8,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: whitesmoke;
 
   & .app-header {
     background-color: #e0dac0;
@@ -40,7 +41,7 @@
       padding: 1rem;
       border-radius: 1rem;
       flex-direction: column;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.426);
 
       .app-main__form__body-wrapper {
         display: flex;
@@ -74,6 +75,7 @@
 
       button {
         color: black;
+        background-color: burlywood;
       }
     }
 
@@ -83,7 +85,7 @@
       gap: 1rem;
       padding: 1rem;
       border-radius: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 4px  rgba(0, 0, 0, 0.426);
 
       .app-main__list-item {
         width: 100%;
