@@ -1,0 +1,140 @@
+#root {
+  width: 100%;
+  height: 100%;
+  color: #1f1f1f;
+}
+
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  & .app-header {
+    background-color: #e0dac0;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-height: 50px;
+    }
+  }
+
+  & .app-main {
+    position: relative;
+    max-width: 100%;
+    overflow-y: auto;
+    flex: 1;
+    gap: 2rem;
+    display: flex;
+    padding: 2rem;
+    flex-direction: column;
+
+    & .app-main__form {
+      overflow-y: auto;
+      min-height: 300px;
+      gap: 1rem;
+      display: flex;
+      padding: 1rem;
+      border-radius: 1rem;
+      flex-direction: column;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+      .app-main__form__body-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 2rem;
+        justify-content: space-between;
+      }
+
+      @media screen and (min-width: 600px) {
+        .app-main__form__body-wrapper {
+          flex-direction: row;
+        }
+      }
+
+      .app-main__form__body {
+        width: 100%;
+        gap: 1rem;
+        border: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+
+        input {
+          padding: 0.3rem;
+        }
+        textarea {
+          resize: none;
+        }
+      }
+
+      button {
+        color: black;
+      }
+    }
+
+    & .app-main__list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      .app-main__list-item {
+        width: 100%;
+        overflow: hidden;
+        max-height: 100px;
+        display: flex;
+        border-radius: 0.5rem;
+        align-items: center;
+        background-color: #dbdbdb;
+        box-shadow: inset 0px 0px 6px rgb(159, 159, 159);
+
+        .app-main__list-item__image-container {
+          display: flex;
+          align-items: center;
+          max-width: 150px;
+
+          img {
+            max-width: 100%;
+          }
+        }
+
+        .app-main__list-item__content {
+          padding: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 100%;
+          width: 100%;
+
+          .app-main__list-item__content-info {
+          }
+
+          .app-main__list-item__content-remove-action {
+          }
+        }
+      }
+    }
+  }
+
+  & .app-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: #e0dac0;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
