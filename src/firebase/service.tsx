@@ -1,7 +1,6 @@
 import type { IWishListItem } from "../interfaces/wishlist";
 
-const API_URL =
-  "https://wishlist-pwa-default-rtdb.europe-west1.firebasedatabase.app/";
+const API_URL = import.meta.env.VITE_FIREBASE_DATABASE_URL;
 
 export const getWishes = () => {
   return fetch(API_URL + "wishlist.json").then((d) => d.json());
