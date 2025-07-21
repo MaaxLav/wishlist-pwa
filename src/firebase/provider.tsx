@@ -1,21 +1,23 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { FirebaseContext } from "./app";
 import {
-  collection,
-  getFirestore,
-  getDocs,
-  addDoc,
-  deleteDoc,
   doc,
+  where,
+  query,
+  addDoc,
   setDoc,
+  getDoc,
+  getDocs,
+  deleteDoc,
+  collection,
+  onSnapshot,
 } from "firebase/firestore";
-import app from "./app";
+import { db } from "./app";
 import type { IWishListItem } from "../interfaces/wishlist";
 
 export const FirebaseProvider = ({ children }: { children: ReactNode }) => {
-  const db = getFirestore(app);
-  const [wishes, setWishes] = useState<IWishListItem[]>([]);
   const wishlistCollection = collection(db, "wishlist");
+  const [wishes, setWishes] = useState<IWishListItem[]>([]);
 
   const getWishes = async () => {
     const wishlistSnapshot = await getDocs(wishlistCollection);
@@ -23,28 +25,58 @@ export const FirebaseProvider = ({ children }: { children: ReactNode }) => {
       doc.data()
     ) as IWishListItem[];
 
-    console.log(wishesDocs);
     setWishes(wishesDocs);
   };
 
   const addWish = async (data: IWishListItem) => {
-    const wishRef = await addDoc(wishlistCollection, data);
+    const wishRef = await addDoc(wishlistCollection, {
+      ...data,
+      id: Date.now(),
+    });
     await setDoc(doc(wishlistCollection, wishRef.id), {
       id: wishRef.id,
       ...data,
     });
-    setWishes((pv) => [...pv, { ...data, id: wishRef.id }]);
-    return wishRef;
   };
 
   const removeWish = async (wishId: string) => {
-    await deleteDoc(doc(wishlistCollection, wishId));
-    setWishes((pV) => pV.filter((i) => i.id !== wishId));
+    const q = query(wishlistCollection, where("id", "==", wishId));
+    const res = await getDocs(q);
+    if (res.docs.length) {
+      const docId = res.docs[0].id;
+      await deleteDoc(doc(wishlistCollection, docId));
+    }
+  };
+
+  const listenToRealtimeData = () => {
+    onSnapshot(
+      wishlistCollection,
+      { includeMetadataChanges: true },
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          const source = snapshot.metadata.fromCache ? "local cache" : "server";
+          const data = change.doc.data();
+          if (import.meta.env.DEV) {
+            console.log("Data came from " + source, data);
+          }
+
+          if (change.type === "added") {
+            setWishes((pv) => [
+              ...pv,
+              { ...data, id: data.id } as IWishListItem,
+            ]);
+          }
+          if (change.type === "removed") {
+            setWishes((pV) => pV.filter((i) => i.id !== data.id));
+          }
+        });
+      }
+    );
   };
 
   useEffect(() => {
-      getWishes();
-      enable
+    listenToRealtimeData();
+    getWishes();
   }, []);
 
   const value = {

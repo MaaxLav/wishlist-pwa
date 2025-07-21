@@ -75,6 +75,7 @@ function App() {
               </div>
               <div className="app-main__list-item__content">
                 <div className="app-main__list-item__content-info">
+                  <div>{item.id}$</div>
                   <div>{item.price}$</div>
                   <div>{item.name}</div>
                   <div>{item.description}</div>

@@ -20,7 +20,7 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: ({ url }) => {
-              return url.pathname.includes("wishlist.json");
+              return url.origin !== "https://firestore.googleapis.com";
             },
             handler: "NetworkFirst",
             options: {

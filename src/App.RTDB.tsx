@@ -4,7 +4,7 @@ import type { IWishListItem } from "./interfaces/wishlist";
 import logo from "./assets/logo.svg";
 import { addWish, getWishes, removeWish } from "./firebase/service";
 
-function App() {
+function AppOld() {
   const [wishItems, setWishItems] = useState<IWishListItem[]>([]);
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -119,4 +119,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppOld;
