@@ -15,6 +15,7 @@ export default defineConfig({
         type: "module",
       },
       workbox: {
+        cacheId: new Date().getTime().toString(),
         globPatterns: ["**/*.{js,css,html,ico,png,svg,ttf}"],
         runtimeCaching: [
           {
