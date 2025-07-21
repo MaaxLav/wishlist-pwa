@@ -81,44 +81,56 @@
 
     & .app-main__list {
       display: flex;
-      flex-direction: column;
       gap: 1rem;
-      padding: 1rem;
+      flex-wrap: wrap;
       border-radius: 1rem;
-      box-shadow: 0 1px 4px  rgba(0, 0, 0, 0.426);
+      /* padding: 1rem; */
+      /* box-shadow: 0 1px 4px  rgba(0, 0, 0, 0.426); */
 
       .app-main__list-item {
-        width: 100%;
+        position: relative;
+        flex: 1 0 30%;
         overflow: hidden;
-        max-height: 100px;
+        max-height: fit-content;
         display: flex;
+        flex-direction: column;
         border-radius: 0.5rem;
         align-items: center;
-        background-color: #dbdbdb;
-        box-shadow: inset 0px 0px 6px rgb(159, 159, 159);
+        background-color: whitesmoke;
+        border: 1px solid black;
+        box-shadow: 0px 0px 6px rgb(159, 159, 159);
 
         .app-main__list-item__image-container {
           display: flex;
           align-items: center;
-          max-width: 150px;
+          max-width: 100%;
+          max-height: 150px;
 
           img {
             max-width: 100%;
+            max-height: 100%;
           }
         }
 
         .app-main__list-item__content {
           padding: 1rem;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: space-between;
           height: 100%;
           width: 100%;
 
           .app-main__list-item__content-info {
+            text-align: center;
           }
 
           .app-main__list-item__content-remove-action {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            background-color: #1f1f1f;
+            color: whitesmoke;
           }
         }
       }

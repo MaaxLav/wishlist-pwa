@@ -1,18 +1,23 @@
-import { useContext, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import "./styles/App.css";
 import type { IWishListItem } from "./interfaces/wishlist";
 import logo from "./assets/logo.svg";
-import { FirebaseContext } from "./firebase/app";
+import { addWish, getWishes, removeWish } from "./firebase/service";
 
 function App() {
-  const { wishes, addWish, removeWish } = useContext(FirebaseContext);
+  const [wishItems, setWishItems] = useState<IWishListItem[]>([]);
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newWish = Object.fromEntries(formData) as unknown as IWishListItem;
     try {
-      await addWish(newWish);
+      const res = await addWish(newWish);
+      const newWishObj = {
+        id: res.name as string,
+        ...newWish,
+      } as IWishListItem;
+      setWishItems((pV) => [newWishObj, ...pV]);
     } catch (error) {
       console.error(error);
     }
@@ -20,7 +25,23 @@ function App() {
 
   const removeItemHandler = async (item: IWishListItem) => {
     await removeWish(item.id as string);
+    setWishItems((pV) => pV.filter((i) => i.id !== item.id));
   };
+
+  useEffect(() => {
+    const getWishesHandler = async () => {
+      const data = await getWishes();
+      if (data) {
+        const arr = Object.entries(data).map(([id, obj]) => ({
+          id,
+          ...(obj as IWishListItem),
+        }));
+        setWishItems(arr);
+      }
+    };
+
+    getWishesHandler();
+  }, []);
 
   return (
     <section className="app">
@@ -67,16 +88,16 @@ function App() {
           <button type="submit">Add Wish</button>
         </form>
         <div className="app-main__list">
-          {!wishes.length && "No wish items"}
-          {wishes.map((item: IWishListItem) => (
+          {!wishItems.length && "No wish items"}
+          {wishItems.map((item) => (
             <div className="app-main__list-item" key={item.id}>
               <div className="app-main__list-item__image-container">
                 <img src={item.imageUrl} />
               </div>
               <div className="app-main__list-item__content">
                 <div className="app-main__list-item__content-info">
-                  <div>{item.price}$</div>
                   <div>{item.name}</div>
+                  <div>{item.price}$</div>
                   <div>{item.description}</div>
                 </div>
                 <button
